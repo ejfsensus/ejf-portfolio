@@ -1,4 +1,5 @@
 import { ArrowUpRight, MapPin, Mail } from 'lucide-react';
+import ejfPortrait from '../ejf1.png';
 
 export function FounderStrip({ onOpen }: { onOpen: () => void }) {
   return (
@@ -11,21 +12,19 @@ export function FounderStrip({ onOpen }: { onOpen: () => void }) {
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
           <div className="md:col-span-5">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-ink border border-white/5">
+            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-ink border border-white/5 ring-1 ring-white/5">
+              <img
+                src={ejfPortrait}
+                alt="Ethan James Farrell"
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
               <div
                 aria-hidden
-                className="absolute inset-0"
-                style={{
-                  background:
-                    'radial-gradient(120% 80% at 30% 20%, rgba(217,122,74,0.35) 0%, transparent 55%), radial-gradient(100% 80% at 80% 100%, rgba(43,42,99,0.55) 0%, transparent 60%)',
-                }}
+                className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-obsidian/70 to-transparent"
               />
-              <div className="relative h-full w-full flex items-end p-8">
-                <div className="font-serif italic text-[44px] md:text-[56px] leading-[1] text-bone/85">
-                  Ethan<br />James<br />Farrell
-                </div>
-              </div>
-              <div className="absolute top-5 left-5 flex items-center gap-2 text-[11px] tracking-[0.18em] uppercase text-bone/60">
+              <div className="absolute top-5 left-5 flex items-center gap-2 text-[11px] tracking-[0.18em] uppercase text-bone/80">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-prism opacity-60" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-prism" />
