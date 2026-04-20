@@ -31,10 +31,10 @@ export function Positioning() {
         </h2>
 
         <p className="mt-12 max-w-[62ch] text-[18px] leading-[1.65] text-bone/70">
-          Advanced technology shouldn't feel complicated, extractive, or exclusive. OpusAI exists to
-          make AI adoption accessible, ethical, and genuinely useful — for businesses of any size,
-          and for the people those businesses serve. Every engagement and every product is
-          anchored to three principles.
+          Advanced technology shouldn't feel complicated, extractive, or exclusive. Ethan's
+          practice exists to make AI adoption accessible, ethical, and genuinely useful — for
+          businesses of any size, and for the people those businesses serve. Every engagement
+          and every product is anchored to three principles.
         </p>
 
         <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-3 border-t border-white/10">

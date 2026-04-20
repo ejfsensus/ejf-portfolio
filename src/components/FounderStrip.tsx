@@ -6,7 +6,7 @@ export function FounderStrip({ onOpen }: { onOpen: () => void }) {
       <div className="mx-auto max-w-[1360px] px-6 md:px-10">
         <div className="flex items-center gap-3 mb-14">
           <span className="h-px w-10 bg-bone/30" />
-          <span className="eyebrow">The founder</span>
+          <span className="eyebrow">Who you work with</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
@@ -42,11 +42,12 @@ export function FounderStrip({ onOpen }: { onOpen: () => void }) {
             </p>
 
             <p className="mt-10 text-[17px] md:text-[18px] leading-[1.65] text-bone/70 max-w-[60ch]">
-              Ethan is the founder of OpusAI and the architect of the Sensus InVista vision. With a
-              career spanning retail leadership at Telefónica (O2), business development at Vasco
-              Carbon, and eight years of research facilitation at the University of Central
-              Lancashire's Applied Health Research Hub, he brings a rare blend of commercial
-              instinct, operational rigour and ethical grounding to applied AI.
+              Ethan leads the practice. OpusAI is the studio name he operates through, and the
+              architecture behind Sensus InVista is his long arc. With a career spanning retail
+              leadership at Telefónica (O2), business development at Vasco Carbon, and eight years
+              of research facilitation at the University of Central Lancashire's Applied Health
+              Research Hub, he brings a rare blend of commercial instinct, operational rigour and
+              ethical grounding to applied AI.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-[13.5px] text-bone/60">

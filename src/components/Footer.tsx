@@ -8,10 +8,13 @@ export function Footer() {
           <div className="col-span-2 md:col-span-2">
             <div className="flex items-center gap-2.5">
               <Triangle size={14} strokeWidth={1.75} className="text-bone" />
-              <span className="text-[13px] font-medium tracking-[0.18em] text-bone">OPUSAI</span>
+              <span className="text-[13px] font-medium tracking-[0.18em] text-bone">
+                ETHAN JAMES FARRELL
+              </span>
             </div>
             <p className="mt-6 font-serif italic text-[18px] text-bone/70 max-w-[36ch]">
-              The applied pillar of Sensus InVista. Human-first AI, built with intent.
+              AI consulting, design &amp; deployment. Operating as OpusAI — the applied arm of
+              Sensus InVista.
             </p>
           </div>
 
@@ -46,16 +49,16 @@ export function Footer() {
             Bridge Grove, Southport, PR8 5AA · United Kingdom
           </div>
           <div className="text-[11px] tracking-[0.18em] uppercase text-bone/45">
-            © {new Date().getFullYear()} OpusAI — All rights reserved
+            © {new Date().getFullYear()} Ethan James Farrell — All rights reserved
           </div>
         </div>
 
         <div
           aria-hidden
-          className="mt-16 font-display font-semibold tracking-tightest text-bone/5 leading-[0.8] select-none"
-          style={{ fontSize: 'clamp(96px, 22vw, 320px)' }}
+          className="mt-16 font-display font-semibold tracking-tightest text-bone/5 leading-[0.8] select-none whitespace-nowrap"
+          style={{ fontSize: 'clamp(60px, 14vw, 200px)' }}
         >
-          OpusAI
+          Ethan James Farrell
         </div>
       </div>
     </footer>
