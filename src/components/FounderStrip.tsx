@@ -22,8 +22,20 @@ export function FounderStrip({ onOpen }: { onOpen: () => void }) {
               />
               <div
                 aria-hidden
-                className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-obsidian/70 to-transparent"
+                className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-obsidian via-obsidian/70 to-transparent"
               />
+              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                <div
+                  className="font-display font-semibold text-[40px] md:text-[52px] leading-[0.95] tracking-tightest text-bone"
+                  style={{ textShadow: '0 2px 24px rgba(10,10,12,0.55)' }}
+                >
+                  Ethan
+                  <br />
+                  James
+                  <br />
+                  Farrell
+                </div>
+              </div>
               <div className="absolute top-5 left-5 flex items-center gap-2 text-[11px] tracking-[0.18em] uppercase text-bone/80">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-prism opacity-60" />
