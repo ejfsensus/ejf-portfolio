@@ -1,16 +1,16 @@
 const principles = [
   {
-    letter: 'E',
+    index: '01',
     word: 'Ethical',
     body: 'Privacy, compliance, and fairness built in from the first sketch — not patched on later.',
   },
   {
-    letter: 'E',
+    index: '02',
     word: 'Effective',
     body: 'Measurable outcomes — time saved, revenue unlocked, ideas shipped — so AI pays for itself.',
   },
   {
-    letter: 'E',
+    index: '03',
     word: 'Equitable',
     body: 'Pricing, tools, and training designed so small teams can access the same quality as enterprises.',
   },
@@ -37,23 +37,56 @@ export function Positioning() {
           and every product is anchored to three principles.
         </p>
 
-        <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-3 border-t border-white/10">
-          {principles.map((p, i) => (
-            <div
-              key={p.word}
-              className={`py-10 md:py-14 md:px-10 first:pl-0 ${
-                i < 2 ? 'md:border-r border-white/10' : ''
-              } border-b md:border-b-0 border-white/10`}
-            >
-              <div className="flex items-baseline gap-6">
-                <span className="font-display font-semibold text-[90px] md:text-[140px] leading-[0.8] tracking-tightest text-bone/90">
-                  {p.letter}
-                </span>
-                <span className="font-serif italic text-[22px] md:text-[26px] text-bone">{p.word}</span>
+        <div className="mt-16 md:mt-24 flex items-center gap-3">
+          <span className="h-px w-6 bg-bone/30" />
+          <span className="eyebrow">The Three E&apos;s — our commitment</span>
+        </div>
+
+        <div className="relative mt-8 rounded-[28px] border border-white/10 bg-ink/80 overflow-hidden">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(90% 70% at 15% 0%, rgba(63,184,176,0.09) 0%, transparent 55%), radial-gradient(80% 80% at 100% 100%, rgba(217,122,74,0.10) 0%, transparent 60%)',
+            }}
+          />
+          <div className="relative grid grid-cols-1 md:grid-cols-3">
+            {principles.map((p, i) => (
+              <div
+                key={p.word}
+                className={`group relative px-7 md:px-10 py-10 md:py-14 transition-colors duration-500 hover:bg-bone/[0.025] ${
+                  i < 2 ? 'md:border-r border-white/10' : ''
+                } ${i < principles.length - 1 ? 'border-b md:border-b-0 border-white/10' : ''}`}
+              >
+                <div className="flex items-center gap-3 text-[11px] tracking-[0.24em] uppercase text-bone/45">
+                  <span>{p.index}</span>
+                  <span className="h-px w-6 bg-bone/20" />
+                </div>
+
+                <div className="mt-5 flex items-baseline gap-5">
+                  <span
+                    className="font-serif italic font-light text-[110px] md:text-[160px] leading-[0.8] tracking-tightest bg-clip-text text-transparent transition-transform duration-500 ease-out group-hover:-translate-y-1 motion-reduce:group-hover:translate-y-0"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(180deg, #F4F1EC 0%, rgba(244,241,236,0.55) 100%)',
+                    }}
+                  >
+                    E
+                  </span>
+                  <span className="font-serif italic text-[24px] md:text-[30px] text-bone">
+                    {p.word}
+                  </span>
+                </div>
+
+                <div className="mt-5 h-[2px] w-10 rounded-full prism-bar opacity-70 transition-all duration-500 ease-out group-hover:w-24 group-hover:opacity-100" />
+
+                <p className="mt-6 text-[15.5px] leading-[1.6] text-bone/65 max-w-[32ch]">
+                  {p.body}
+                </p>
               </div>
-              <p className="mt-6 text-[15.5px] leading-[1.6] text-bone/60 max-w-[32ch]">{p.body}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
