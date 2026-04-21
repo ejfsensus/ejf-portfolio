@@ -1,5 +1,5 @@
 import { ArrowUpRight, MapPin, Mail } from 'lucide-react';
-import ejfPortrait from '../ejf1.png';
+import ejfPortrait from '../ejf2.png';
 
 export function FounderStrip({ onOpen }: { onOpen: () => void }) {
   return (
