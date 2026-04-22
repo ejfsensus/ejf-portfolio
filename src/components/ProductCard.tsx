@@ -6,6 +6,7 @@ import obsidianAiImg from '../ObsidianAI.png';
 import orbiImg from '../Orbi.png';
 import myBluumImg from '../myBluum.png';
 import sparkImg from '../SensusSpark.png';
+import studioImg from '../studio_by_OpusAI.png';
 
 const imageBySlug: Record<string, string> = {
   obsidianchat: obsidianChatImg,
@@ -13,6 +14,7 @@ const imageBySlug: Record<string, string> = {
   orbi: orbiImg,
   mybluum: myBluumImg,
   spark: sparkImg,
+  studio: studioImg,
 };
 
 function resolveImage(product: Product): string | null {
