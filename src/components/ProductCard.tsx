@@ -1,16 +1,44 @@
 import { ArrowUpRight, Wrench, PoundSterling, Compass } from 'lucide-react';
 import type { Product } from '../lib/types';
 import { PrismArtefact } from './PrismArtefact';
+import obsidianChatImg from '../ObsidianChat.png';
+import obsidianAiImg from '../ObsidianAI.png';
+import orbiImg from '../Orbi.png';
+import myBluumImg from '../myBluum.png';
+import sparkImg from '../SensusSpark.png';
+
+const imageBySlug: Record<string, string> = {
+  obsidianchat: obsidianChatImg,
+  obsidianai: obsidianAiImg,
+  orbi: orbiImg,
+  mybluum: myBluumImg,
+  spark: sparkImg,
+};
+
+function resolveImage(product: Product): string | null {
+  if (imageBySlug[product.slug]) return imageBySlug[product.slug];
+  const key = product.artefact_url ?? '';
+  if (key && imageBySlug[key]) return imageBySlug[key];
+  if (key.startsWith('http')) return key;
+  return null;
+}
 
 export function ProductCard({ product, onOpen }: { product: Product; onOpen: () => void }) {
-  return (
-    <button
-      onClick={onOpen}
-      className="group text-left canvas-card p-6 md:p-8 flex flex-col gap-6 hover:border-white/15 transition-all duration-500"
-      style={{ transform: 'translateZ(0)' }}
-    >
+  const isExternal = product.cta_href?.startsWith('http');
+  const imageUrl = resolveImage(product);
+
+  const className =
+    'group text-left canvas-card p-6 md:p-8 flex flex-col gap-6 hover:border-white/15 transition-all duration-500';
+
+  const body = (
+    <>
       <div className="relative">
-        <PrismArtefact hue={product.accent_hue} seed={product.slug} imageUrl={product.artefact_url} alt={product.wordmark} />
+        <PrismArtefact
+          hue={product.accent_hue}
+          seed={product.slug}
+          imageUrl={imageUrl}
+          alt={product.wordmark}
+        />
       </div>
 
       <div className="flex items-center gap-3 text-[11px] tracking-[0.18em] uppercase text-bone/55">
@@ -37,25 +65,50 @@ export function ProductCard({ product, onOpen }: { product: Product; onOpen: () 
       </div>
 
       <div className="flex items-center justify-between pt-2">
-        <span className="text-[13px] text-bone/80 link-underline">
-          {product.cta_label}
-        </span>
+        <span className="text-[13px] text-bone/80 link-underline">{product.cta_label}</span>
         <ArrowUpRight
           size={18}
           className="text-bone/80 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
       </div>
+    </>
+  );
+
+  if (isExternal) {
+    return (
+      <a
+        href={product.cta_href}
+        target="_blank"
+        rel="noreferrer"
+        className={className}
+        style={{ transform: 'translateZ(0)' }}
+      >
+        {body}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      onClick={onOpen}
+      className={className}
+      style={{ transform: 'translateZ(0)' }}
+    >
+      {body}
     </button>
   );
 }
 
 function StatusChip({ status }: { status: string }) {
-  const color = status.toLowerCase().includes('build')
-    ? 'text-ember'
-    : status.toLowerCase().includes('access')
+  const s = status.toLowerCase();
+  const color = s.includes('active')
     ? 'text-prism'
-    : status.toLowerCase().includes('roadmap')
-    ? 'text-bone/45'
+    : s.includes('r&d')
+    ? 'text-ember'
+    : s.includes('proposal')
+    ? 'text-bone/75'
+    : s.includes('design')
+    ? 'text-bone/65'
     : 'text-bone/75';
   return <span className={color}>{status}</span>;
 }
