@@ -18,7 +18,7 @@ export function FounderStrip({ onOpen }: { onOpen: () => void }) {
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="metadata"
                 aria-label="Ethan James Farrell"
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -50,7 +50,7 @@ export function FounderStrip({ onOpen }: { onOpen: () => void }) {
 
           <div className="md:col-span-7 md:pt-6">
             <p className="font-serif italic text-[26px] md:text-[34px] leading-[1.25] text-bone">
-              Multi-faceted by design, unconventional by instinct — fuelled by innovation, guided
+              Multi-faceted by design, unconventional by instinct, fuelled by innovation, guided
               by purpose.
             </p>
 

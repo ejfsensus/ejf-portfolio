@@ -30,27 +30,40 @@ export function Faq({ items }: { items: FaqType[] }) {
 
           <div className="md:col-span-7">
             <div className="border-t border-white/10">
+              {items.length === 0 &&
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} aria-hidden className="border-b border-white/10 py-6 animate-pulse">
+                    <div className="h-5 w-2/3 bg-bone/10 rounded" />
+                  </div>
+                ))}
               {items.map((f) => {
                 const isOpen = open === f.id;
                 return (
                   <div key={f.id} className="border-b border-white/10">
                     <button
                       onClick={() => setOpen(isOpen ? null : f.id)}
-                      className="w-full flex items-start justify-between gap-6 text-left py-6 group"
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-panel-${f.id}`}
+                      id={`faq-trigger-${f.id}`}
+                      className="w-full min-h-[64px] flex items-center justify-between gap-6 text-left py-5 group"
                     >
                       <span className="font-display text-[18px] md:text-[22px] text-bone tracking-tight leading-[1.3]">
                         {f.question}
                       </span>
-                      <span className="mt-1 shrink-0 w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-bone/70 group-hover:border-white/40 transition">
+                      <span aria-hidden className="shrink-0 w-11 h-11 rounded-full border border-white/15 flex items-center justify-center text-bone/70 group-hover:border-white/40 transition">
                         {isOpen ? <Minus size={14} /> : <Plus size={14} />}
                       </span>
                     </button>
                     <div
+                      id={`faq-panel-${f.id}`}
+                      role="region"
+                      aria-labelledby={`faq-trigger-${f.id}`}
+                      aria-hidden={!isOpen}
                       className={`overflow-hidden transition-all duration-500 ${
                         isOpen ? 'max-h-60 opacity-100 pb-6' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <p className="text-[15.5px] leading-[1.65] text-bone/65 max-w-[62ch]">
+                      <p className="text-[15.5px] leading-[1.65] text-bone/70 max-w-[62ch]">
                         {f.answer}
                       </p>
                     </div>

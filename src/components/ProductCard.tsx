@@ -1,3 +1,4 @@
+import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { ArrowUpRight, Wrench, PoundSterling, Compass } from 'lucide-react';
 import type { Product } from '../lib/types';
 import { PrismArtefact } from './PrismArtefact';
@@ -30,7 +31,7 @@ export function ProductCard({ product, onOpen }: { product: Product; onOpen: () 
   const imageUrl = resolveImage(product);
 
   const className =
-    'group text-left canvas-card p-6 md:p-8 flex flex-col gap-6 hover:border-white/15 transition-all duration-500';
+    'group block w-full text-left canvas-card p-6 md:p-8 flex flex-col gap-6 hover:border-white/15 transition-all duration-500';
 
   const body = (
     <>
@@ -90,14 +91,25 @@ export function ProductCard({ product, onOpen }: { product: Product; onOpen: () 
     );
   }
 
+  const onKey = (e: ReactKeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onOpen();
+    }
+  };
+
   return (
-    <button
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onOpen}
-      className={className}
+      onKeyDown={onKey}
+      aria-label={`Open ${product.wordmark} brief`}
+      className={`${className} cursor-pointer`}
       style={{ transform: 'translateZ(0)' }}
     >
       {body}
-    </button>
+    </div>
   );
 }
 
@@ -126,10 +138,10 @@ function Feasibility({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <Icon size={14} strokeWidth={1.5} className="mt-1 text-bone/45 shrink-0" />
+      <Icon size={14} strokeWidth={1.5} className="mt-1 text-bone/60 shrink-0" />
       <div className="min-w-0">
-        <span className="text-[11px] tracking-[0.18em] uppercase text-bone/40 mr-2">{label}</span>
-        <span className="text-[13.5px] text-bone/70 leading-[1.55]">{text}</span>
+        <span className="text-[11px] tracking-[0.18em] uppercase text-bone/60 mr-2">{label}</span>
+        <span className="text-[13.5px] text-bone/75 leading-[1.55]">{text}</span>
       </div>
     </div>
   );

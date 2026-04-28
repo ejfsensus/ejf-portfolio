@@ -2,12 +2,12 @@ const principles = [
   {
     index: '01',
     word: 'Ethical',
-    body: 'Privacy, compliance, and fairness built in from the first sketch — not patched on later.',
+    body: 'Privacy, compliance, and fairness built in from the first sketch, not patched on later.',
   },
   {
     index: '02',
     word: 'Effective',
-    body: 'Measurable outcomes — time saved, revenue unlocked, ideas shipped — so AI pays for itself.',
+    body: 'Measurable outcomes: time saved, revenue unlocked, ideas shipped, so AI pays for itself.',
   },
   {
     index: '03',
@@ -32,14 +32,14 @@ export function Positioning() {
 
         <p className="mt-12 max-w-[62ch] text-[18px] leading-[1.65] text-bone/70">
           Advanced technology shouldn't feel complicated, extractive, or exclusive. Ethan's
-          practice exists to make AI adoption accessible, ethical, and genuinely useful — for
+          practice exists to make AI adoption accessible, ethical, and genuinely useful: for
           businesses of any size, and for the people those businesses serve. Every engagement
           and every product is anchored to three principles.
         </p>
 
         <div className="mt-16 md:mt-24 flex items-center gap-3">
           <span className="h-px w-6 bg-bone/30" />
-          <span className="eyebrow">The Three E&apos;s — our commitment</span>
+          <span className="eyebrow">The Three E&apos;s, our commitment</span>
         </div>
 
         <div className="relative mt-8 rounded-[28px] border border-white/10 bg-ink/80 overflow-hidden">
@@ -66,11 +66,8 @@ export function Positioning() {
 
                 <div className="mt-5 flex items-baseline gap-5">
                   <span
-                    className="font-serif italic font-normal text-[110px] md:text-[160px] leading-[0.8] tracking-tightest bg-clip-text text-transparent transition-transform duration-500 ease-out group-hover:-translate-y-1 motion-reduce:group-hover:translate-y-0"
-                    style={{
-                      backgroundImage:
-                        'linear-gradient(180deg, #F4F1EC 0%, rgba(244,241,236,0.7) 100%)',
-                    }}
+                    aria-hidden
+                    className="font-serif italic font-normal text-[110px] md:text-[160px] leading-[0.8] tracking-tightest text-bone/85 transition-transform duration-500 ease-out group-hover:-translate-y-1"
                   >
                     E
                   </span>

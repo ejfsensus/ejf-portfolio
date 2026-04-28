@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X, ArrowUpRight, Mail, Linkedin, MapPin, Phone } from 'lucide-react';
 import type { Experience } from '../lib/types';
+import { useFocusTrap } from '../lib/useFocusTrap';
 
 const TABS = ['Introduction', 'Why this work', 'Experience', 'Capabilities', 'Beyond', 'Contact'] as const;
 type Tab = (typeof TABS)[number];
@@ -14,7 +15,8 @@ export function FounderModal({
   onClose: () => void;
   experience: Experience[];
 }) {
-  const [tab, setTab] = useState<Tab>('Introduction');
+  const [tab, setTab] = useState<Tab>('Why this work');
+  const containerRef = useFocusTrap<HTMLDivElement>(open);
 
   useEffect(() => {
     if (!open) return;
@@ -36,11 +38,11 @@ export function FounderModal({
       className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-6"
       role="dialog"
       aria-modal="true"
-      aria-label="Meet the founder — Ethan James Farrell"
+      aria-label="Meet the founder,Ethan James Farrell"
     >
-      <button aria-label="Close" onClick={onClose} className="absolute inset-0 bg-obsidian/80 backdrop-blur-md" />
+      <button aria-label="Close" onClick={onClose} tabIndex={-1} className="absolute inset-0 bg-obsidian/80 backdrop-blur-md" />
 
-      <div className="relative z-10 w-full max-w-[760px] max-h-[94vh] overflow-y-auto canvas-card border-white/10">
+      <div ref={containerRef} tabIndex={-1} className="relative z-10 w-full max-w-[760px] max-h-[94vh] overflow-y-auto canvas-card border-white/10">
         <header className="sticky top-0 z-10 bg-ink/95 backdrop-blur border-b border-white/5">
           <div className="px-6 md:px-10 py-6 flex items-start gap-5">
             <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 bg-obsidian border border-white/10">
@@ -70,7 +72,7 @@ export function FounderModal({
                 Founder · Sensus InVista · OpusAI · Southport, UK
               </div>
               <p className="mt-3 font-serif italic text-[15px] text-bone/80 leading-[1.4]">
-                Multi-faceted by design, unconventional by instinct — fuelled by innovation, guided
+                Multi-faceted by design, unconventional by instinct, fuelled by innovation, guided
                 by purpose.
               </p>
             </div>
@@ -123,9 +125,9 @@ function Introduction() {
         <div className="eyebrow mb-3">Short bio</div>
         <p className="text-[16px] leading-[1.7] text-bone/80">
           Ethan is the founder of OpusAI and the architect of the Sensus InVista vision. Across
-          eighteen years of work — from retail leadership at Telefónica (O2), through business
+          eighteen years of work, from retail leadership at Telefónica (O2), through business
           development at Vasco Carbon, to eight years of research facilitation at the University of
-          Central Lancashire's Applied Health Research Hub — he has built a rare mix of commercial
+          Central Lancashire's Applied Health Research Hub, he has built a rare mix of commercial
           instinct, operational rigour and ethical grounding. OpusAI is where that combination
           becomes applied AI that businesses, teams and individuals can actually trust.
         </p>
@@ -133,11 +135,11 @@ function Introduction() {
       <div>
         <div className="eyebrow mb-3">What he's building right now</div>
         <ul className="space-y-3 text-[15px] leading-[1.6] text-bone/75">
-          <li><strong className="text-bone">OpusAI</strong> — AI consulting, design and deployment, guided by the Three E's: Ethical, Effective, Equitable.</li>
-          <li><strong className="text-bone">ObsidianAI &amp; .studio</strong> — productised platforms bringing enterprise-grade AI into reach for teams of any size.</li>
-          <li><strong className="text-bone">Sensus Lab</strong> — the experimental R&amp;D pillar feeding tomorrow's work.</li>
-          <li><strong className="text-bone">Sensus InVista / InVista</strong> — the long-arc vision: a verifiable, blockchain-backed knowledge network.</li>
-          <li><strong className="text-bone">Acuity Institute</strong> — a personal initiative holding space for philosophy, testimony and applied discernment.</li>
+          <li><strong className="text-bone">OpusAI</strong>,AI consulting, design and deployment, guided by the Three E's: Ethical, Effective, Equitable.</li>
+          <li><strong className="text-bone">ObsidianAI &amp; .studio</strong>,productised platforms bringing enterprise-grade AI into reach for teams of any size.</li>
+          <li><strong className="text-bone">Sensus Lab</strong>,the experimental R&amp;D pillar feeding tomorrow's work.</li>
+          <li><strong className="text-bone">Sensus InVista / InVista</strong>,the long-arc vision: a verifiable, blockchain-backed knowledge network.</li>
+          <li><strong className="text-bone">Acuity Institute</strong>,a personal initiative holding space for philosophy, testimony and applied discernment.</li>
         </ul>
       </div>
       <div>
@@ -155,20 +157,21 @@ function Introduction() {
 function Why() {
   const principles = [
     { w: 'Ethical', q: 'Privacy and fairness aren\'t features you add on. They\'re the starting point.' },
-    { w: 'Effective', q: 'If it doesn\'t save time, unlock revenue, or create real capacity, I\'ll tell you — and we won\'t ship it.' },
+    { w: 'Effective', q: 'If it doesn\'t save time, unlock revenue, or create real capacity, I\'ll tell you,and we won\'t ship it.' },
     { w: 'Equitable', q: 'Small teams deserve the same quality of thinking as enterprises. Pricing, access, and attention should reflect that.' },
   ];
   return (
     <div className="space-y-10">
       <p className="font-serif italic text-[22px] md:text-[26px] leading-[1.35] text-bone">
         "Advanced technology shouldn't feel complicated, extractive, or exclusive. I build AI that
-        keeps humanity at the core — not the other way round."
+        keeps humanity at the core,not the other way round."
       </p>
       <div className="space-y-6">
         {principles.map((p) => (
-          <div key={p.w} className="border-l-2 border-ember/70 pl-5">
+          <div key={p.w} className="rounded-2xl border border-white/10 bg-ember/[0.04] p-5">
             <div className="font-display font-semibold text-[18px] text-bone">{p.w}</div>
-            <p className="mt-1 font-serif italic text-[15.5px] text-bone/75 leading-[1.5]">{p.q}</p>
+            <div className="mt-2 h-[2px] w-10 rounded-full prism-bar opacity-70" />
+            <p className="mt-3 font-serif italic text-[15.5px] text-bone/75 leading-[1.5]">{p.q}</p>
           </div>
         ))}
       </div>
@@ -178,7 +181,7 @@ function Why() {
           Ethan's path into ethical AI hasn't been purely academic. It has been shaped by years of
           close operational work inside public-sector research, by direct experience of how
           systems and data can be mishandled when accountability is thin, and by a disciplined
-          personal practice of reflection. That combination — commercial, operational, human — is
+          personal practice of reflection. That combination,commercial, operational, human,is
           why OpusAI's work on privacy, data integrity and human oversight is lived rather than
           theoretical.
         </p>
@@ -262,11 +265,11 @@ function Beyond() {
   return (
     <div className="space-y-8">
       <div>
-        <div className="eyebrow mb-3">Acuity Institute — a personal initiative</div>
+        <div className="eyebrow mb-3">Acuity Institute,a personal initiative</div>
         <p className="text-[15.5px] leading-[1.65] text-bone/75">
-          Alongside the commercial work, Ethan stewards the Acuity Institute — pathways to wisdom
+          Alongside the commercial work, Ethan stewards the Acuity Institute,pathways to wisdom
           through library, philosophy, and webinars. Acuity holds space for spirituality, lived
-          testimony, and applied discernment — the parts of the journey that don't belong on a
+          testimony, and applied discernment,the parts of the journey that don't belong on a
           product roadmap but quietly shape the standards he brings to everything else.
         </p>
         <a
@@ -285,13 +288,13 @@ function Beyond() {
           <li>Quiet over loud. Technology should earn attention, not demand it.</li>
           <li>Decentralise what matters. Data integrity, trust, and knowledge thrive when power is spread out.</li>
           <li>Forgiveness is a given; honesty is non-negotiable.</li>
-          <li>Refuse to sell yourself short — or anyone else.</li>
+          <li>Refuse to sell yourself short,or anyone else.</li>
         </ul>
       </div>
       <div>
         <div className="eyebrow mb-3">A note on resilience</div>
         <p className="text-[15px] leading-[1.65] text-bone/70">
-          Ethan is open about the fact that the last few years have required him to rebuild —
+          Ethan is open about the fact that the last few years have required him to rebuild:
           professionally, personally, spiritually. The work at OpusAI is deliberately shaped by
           that: every system is designed with the assumption that people are the most important
           variable, and that protecting them is the whole point.
@@ -305,8 +308,8 @@ function ContactTab() {
   return (
     <div className="space-y-8">
       <p className="font-serif italic text-[20px] md:text-[24px] leading-[1.4] text-bone">
-        "If you feel you can contribute meaningfully — as a client, a collaborator, or an
-        investor — schedule a call. Let's shape what's next together."
+        "If you feel you can contribute meaningfully,as a client, a collaborator, or an
+        investor,schedule a call. Let's shape what's next together."
       </p>
 
       <ul className="space-y-4 text-[15px] text-bone/80">

@@ -55,6 +55,9 @@ export function Acuity({
             src="/acuitybg.png"
             alt=""
             aria-hidden
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div
@@ -77,7 +80,7 @@ export function Acuity({
           <div className="relative grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center px-6 md:px-12 py-14 md:py-20">
             <div className="md:col-span-7">
               <h2 className="font-serif italic font-light text-[44px] md:text-[80px] lg:text-[96px] leading-[0.98] text-bone">
-                Acuity Institute —<br />
+                Acuity Institute,<br />
                 pathways to wisdom.
               </h2>
               <div className="mt-10">
@@ -86,7 +89,7 @@ export function Acuity({
                 </div>
                 <div className="flex flex-wrap gap-2 text-[12px] text-bone/80">
                   {['Discernment', 'Foresight', 'Lucidity', 'Sagacity'].map((w) => (
-                    <span key={w} className="border border-white/20 rounded-full px-3 py-1 backdrop-blur-sm bg-black/20">
+                    <span key={w} className="border border-white/20 rounded-full px-3 py-1 backdrop-blur-sm bg-obsidian/40">
                       {w}
                     </span>
                   ))}
@@ -121,13 +124,13 @@ export function Acuity({
             "Quiet over loud. Technology should earn attention, not demand it. Data integrity,
             trust, and knowledge all get healthier when power is spread out."
           </blockquote>
-          <figcaption className="mt-5 text-[12px] tracking-[0.2em] uppercase text-bone/55">
-            — Ethan, on the standards Acuity quietly brings back to the commercial work.
+          <figcaption className="mt-5 text-[12px] tracking-[0.2em] uppercase text-bone/60">
+            Ethan, on the standards Acuity quietly brings back to the commercial work.
           </figcaption>
         </figure>
 
         <p className="mt-16 max-w-[60ch] text-[17px] leading-[1.65] text-bone/80">
-          Alongside the commercial work, Ethan stewards the Acuity Institute — an independent
+          Alongside the commercial work, Ethan stewards the Acuity Institute, an independent
           project dedicated to truth and the expansion of accurate knowledge. Acuity holds space
           for the parts of the journey that sit outside product roadmaps: spirituality, personal
           testimony, lived experience, and applied discernment.
@@ -179,7 +182,7 @@ export function Acuity({
                   rel="noreferrer"
                   className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-obsidian/70 hover:border-ember/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(217,122,74,0.4)]"
                 >
-                  <div className="relative aspect-video overflow-hidden bg-black">
+                  <div className="relative aspect-video overflow-hidden bg-obsidian">
                     <img
                       src={v.thumbnail_url}
                       alt=""
@@ -211,7 +214,7 @@ export function Acuity({
 
         <div className="mt-20 flex flex-col md:flex-row md:items-center md:justify-between gap-8 border-t border-bone/15 pt-10">
           <p className="font-serif italic text-[18px] md:text-[22px] text-bone/85 max-w-[48ch]">
-            Acuity is intentionally personal. Connected to — but distinct from — the commercial
+            Acuity is intentionally personal. Connected to, but distinct from, the commercial
             pillars. It honours a founder perspective that is inseparable from the work.
           </p>
           <a
