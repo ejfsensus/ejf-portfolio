@@ -1,5 +1,4 @@
 import { ArrowUpRight, MapPin, Mail } from 'lucide-react';
-import ejfPortrait from '../ejf1.png';
 
 export function FounderStrip({ onOpen }: { onOpen: () => void }) {
   return (
@@ -13,11 +12,14 @@ export function FounderStrip({ onOpen }: { onOpen: () => void }) {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
           <div className="md:col-span-5">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-ink border border-white/5 ring-1 ring-white/5">
-              <img
-                src={ejfPortrait}
-                alt="Ethan James Farrell"
-                loading="lazy"
-                decoding="async"
+              <video
+                src="/ProfileCardVideo.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                aria-label="Ethan James Farrell"
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div
