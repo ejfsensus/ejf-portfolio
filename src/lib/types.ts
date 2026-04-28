@@ -74,3 +74,20 @@ export type Testimonial = {
   role: string;
   sort_order: number;
 };
+
+export type AcuitySettings = {
+  id: string;
+  youtube_playlist_id: string;
+  youtube_channel_id: string;
+  updated_at: string;
+};
+
+export type RecentVideo = {
+  id: string;
+  channel_id: string;
+  title: string;
+  description: string;
+  thumbnail_url: string;
+  published_at: string;
+  fetched_at: string;
+};

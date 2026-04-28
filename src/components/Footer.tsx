@@ -1,4 +1,4 @@
-import { Triangle } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-14">
           <div className="col-span-2 md:col-span-2">
             <div className="flex items-center gap-2.5">
-              <Triangle size={14} strokeWidth={1.75} className="text-bone" />
+              <Shield size={14} strokeWidth={1.75} className="text-bone" />
               <span className="text-[13px] font-medium tracking-[0.18em] text-bone">
                 ETHAN JAMES FARRELL
               </span>

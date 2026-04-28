@@ -48,7 +48,7 @@ export function Hero({ onOpenFounder }: { onOpenFounder: () => void }) {
           className="font-display font-semibold text-[48px] sm:text-[72px] md:text-[112px] lg:text-[136px] leading-[0.95] tracking-tightest text-bone max-w-[13ch]"
           style={{ textShadow: '0 2px 40px rgba(10,10,12,0.55)' }}
         >
-          Human-first AI,
+          Unique perspectives,
           <br />
           built with{' '}
           <span className="relative inline-block">
@@ -64,7 +64,7 @@ export function Hero({ onOpenFounder }: { onOpenFounder: () => void }) {
           <p className="md:col-span-7 text-[17px] md:text-[20px] leading-[1.55] text-bone/85 max-w-[58ch]">
             Ethan James Farrell is an AI consultant, designer and builder. Through{' '}
             <span className="text-bone">OpusAI</span> — the applied arm of Sensus InVista — he helps
-            organisations design, build and deploy AI they can actually trust.
+            organisations design, build and deploy solutions they can actually trust.
           </p>
 
           <div className="md:col-span-5 flex flex-col sm:flex-row md:justify-end gap-4">
@@ -88,7 +88,7 @@ export function Hero({ onOpenFounder }: { onOpenFounder: () => void }) {
         <div className="mt-24 md:mt-32 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 border-t border-white/15 pt-8">
           <Stat value="3" label="Three E's framework" />
           <Stat value="3" label="Ecosystem pillars" />
-          <Stat value="6" label="Products in motion" />
+          <Stat value="∞" label="Concepts in motion" />
           <Stat value="18yr" label="Operational grounding" />
         </div>
 

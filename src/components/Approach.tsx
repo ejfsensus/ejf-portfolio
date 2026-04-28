@@ -10,28 +10,28 @@ export function Approach({ steps, capabilities }: { steps: ApproachStep[]; capab
   }, {});
 
   return (
-    <section className="section-pad border-t border-white/5">
+    <section className="py-20 md:py-28 border-t border-white/5 bg-obsidian/60">
       <div className="mx-auto max-w-[1360px] px-6 md:px-10">
-        <div className="flex items-center gap-3 mb-14">
+        <div className="flex items-center gap-3 mb-8">
           <span className="h-px w-10 bg-bone/30" />
-          <span className="eyebrow">How the work gets made</span>
+          <span className="eyebrow">How OpusAI handles new projects</span>
         </div>
 
-        <h2 className="font-display font-semibold text-[36px] md:text-[56px] leading-[1.05] tracking-tightest text-bone max-w-[22ch]">
+        <h2 className="font-display font-medium text-[22px] md:text-[32px] leading-[1.15] tracking-tightest text-bone/85 max-w-[40ch]">
           A five-step engagement model, consistent across every project.
         </h2>
 
-        <ol className="mt-20 grid grid-cols-1 md:grid-cols-5 gap-px bg-white/5 border border-white/5 rounded-2xl overflow-hidden">
+        <ol className="mt-12 grid grid-cols-2 md:grid-cols-5 gap-px bg-white/5 border border-white/5 rounded-2xl overflow-hidden">
           {steps.map((s) => (
-            <li key={s.id} className="bg-obsidian p-6 md:p-8 min-h-[220px] flex flex-col">
-              <div className="font-display font-semibold text-[40px] text-bone/30 tracking-tightest">
+            <li key={s.id} className="bg-obsidian/80 p-5 md:p-6 min-h-[150px] flex flex-col">
+              <div className="font-display font-semibold text-[24px] text-bone/25 tracking-tightest">
                 {String(s.step_number).padStart(2, '0')}
               </div>
               <div className="mt-auto">
-                <div className="font-display font-semibold text-[22px] text-bone tracking-tightest">
+                <div className="font-display font-medium text-[16px] text-bone tracking-tightest">
                   {s.title}
                 </div>
-                <p className="mt-3 text-[13.5px] leading-[1.55] text-bone/60">{s.description}</p>
+                <p className="mt-2 text-[12.5px] leading-[1.5] text-bone/55">{s.description}</p>
               </div>
             </li>
           ))}

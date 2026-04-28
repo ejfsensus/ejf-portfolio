@@ -22,20 +22,25 @@ export function Pillars({ pillars }: { pillars: Pillar[] }) {
             <span className="font-serif italic font-light text-bone/80">Three pillars.</span>
           </h2>
           <p className="md:col-span-7 md:pt-3 text-[17px] md:text-[18px] leading-[1.65] text-bone/70 max-w-[62ch]">
-            OpusAI stands side-by-side with a research arm and a humanitarian arm. Together they
-            form a closed loop: ideas are tested in the lab, productised through OpusAI, and kept
-            accountable by Liberty Rise.
+            OpusAI is part of a conceptual structure with a research arm and a humanitarian arm.
+            Together, this conceptual structure forms a closed loop: ideas are tested in the lab,
+            productised through OpusAI, and kept accountable by Liberty Rise.
           </p>
         </div>
 
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-3xl overflow-hidden">
           {pillars.map((pillar) => {
             const Glyph = glyphFor(pillar.slug);
+            const isLiberty = pillar.slug === 'liberty-rise';
             return (
               <article
                 key={pillar.id}
                 className={`relative p-8 md:p-10 lg:p-12 min-h-[420px] flex flex-col ${
-                  pillar.is_home ? 'bg-ink' : 'bg-obsidian'
+                  pillar.is_home
+                    ? 'bg-ink'
+                    : isLiberty
+                    ? 'bg-[#15110F] ring-1 ring-ember/15 shadow-[0_30px_60px_-30px_rgba(217,122,74,0.35)]'
+                    : 'bg-obsidian'
                 }`}
               >
                 {pillar.is_home && (
@@ -43,10 +48,23 @@ export function Pillars({ pillars }: { pillars: Pillar[] }) {
                     Home pillar
                   </span>
                 )}
+                {isLiberty && (
+                  <span className="absolute top-6 right-6 text-[10px] tracking-[0.2em] uppercase text-ember/80">
+                    Accountability
+                  </span>
+                )}
+                {isLiberty && (
+                  <span
+                    aria-hidden
+                    className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-ember/70 to-transparent opacity-80"
+                  />
+                )}
                 <Glyph
                   size={28}
                   strokeWidth={1.25}
-                  className={pillar.is_home ? 'text-ember' : 'text-bone/60'}
+                  className={
+                    pillar.is_home ? 'text-ember' : isLiberty ? 'text-ember/85' : 'text-bone/60'
+                  }
                 />
                 <div className="mt-auto">
                   <div className="text-[11px] tracking-[0.2em] uppercase text-bone/45 mb-3">

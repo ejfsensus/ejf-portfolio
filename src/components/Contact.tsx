@@ -34,7 +34,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative section-pad border-t border-white/5 overflow-hidden">
+    <section id="contact" className="relative section-pad border-t border-white/5 overflow-hidden pb-32 md:pb-40">
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -49,7 +49,7 @@ export function Contact() {
           <span className="eyebrow">Let's talk</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
+        <div className="relative rounded-[28px] border border-white/10 bg-ink/80 backdrop-blur-sm p-8 md:p-14 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
           <div className="md:col-span-6">
             <h2 className="font-serif italic font-light text-[44px] md:text-[72px] leading-[1] text-bone">
               A stress-free<br />discovery call.

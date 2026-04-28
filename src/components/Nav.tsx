@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Triangle, ArrowUpRight } from 'lucide-react';
+import { Shield, ArrowUpRight } from 'lucide-react';
 
 const links = [
   { href: '#about', label: 'About' },
@@ -28,13 +28,13 @@ export function Nav({ onOpenFounder }: { onOpenFounder: () => void }) {
     >
       <nav className="mx-auto max-w-[1360px] px-6 md:px-10 h-16 md:h-20 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-3 group">
-          <Triangle size={14} strokeWidth={1.75} className="text-bone" />
+          <Shield size={14} strokeWidth={1.75} className="text-bone" />
           <span className="flex flex-col leading-none">
             <span className="text-[13px] font-medium tracking-[0.18em] text-bone">
               ETHAN JAMES FARRELL
             </span>
             <span className="hidden md:block mt-1 text-[10px] tracking-[0.24em] text-bone/45">
-              OPUSAI · PRACTICE
+              OPUSAI
             </span>
           </span>
         </a>

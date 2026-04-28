@@ -27,7 +27,7 @@ export function Positioning() {
 
         <h2 className="font-display font-semibold text-[36px] md:text-[64px] lg:text-[76px] leading-[1.02] tracking-tightest text-bone max-w-[18ch]">
           Fostering transformation through{' '}
-          <span className="font-serif italic font-light text-bone/85">responsible AI.</span>
+          <span className="font-serif italic font-light text-bone/85">responsible solutions.</span>
         </h2>
 
         <p className="mt-12 max-w-[62ch] text-[18px] leading-[1.65] text-bone/70">
@@ -59,22 +59,22 @@ export function Positioning() {
                   i < 2 ? 'md:border-r border-white/10' : ''
                 } ${i < principles.length - 1 ? 'border-b md:border-b-0 border-white/10' : ''}`}
               >
-                <div className="flex items-center gap-3 text-[11px] tracking-[0.24em] uppercase text-bone/45">
+                <div className="flex items-center gap-3 text-[12px] font-semibold tracking-[0.24em] uppercase text-bone/80">
                   <span>{p.index}</span>
-                  <span className="h-px w-6 bg-bone/20" />
+                  <span className="h-px w-6 bg-bone/30" />
                 </div>
 
                 <div className="mt-5 flex items-baseline gap-5">
                   <span
-                    className="font-serif italic font-light text-[110px] md:text-[160px] leading-[0.8] tracking-tightest bg-clip-text text-transparent transition-transform duration-500 ease-out group-hover:-translate-y-1 motion-reduce:group-hover:translate-y-0"
+                    className="font-serif italic font-normal text-[110px] md:text-[160px] leading-[0.8] tracking-tightest bg-clip-text text-transparent transition-transform duration-500 ease-out group-hover:-translate-y-1 motion-reduce:group-hover:translate-y-0"
                     style={{
                       backgroundImage:
-                        'linear-gradient(180deg, #F4F1EC 0%, rgba(244,241,236,0.55) 100%)',
+                        'linear-gradient(180deg, #F4F1EC 0%, rgba(244,241,236,0.7) 100%)',
                     }}
                   >
                     E
                   </span>
-                  <span className="font-serif italic text-[24px] md:text-[30px] text-bone">
+                  <span className="font-serif italic font-normal text-[24px] md:text-[30px] text-bone">
                     {p.word}
                   </span>
                 </div>

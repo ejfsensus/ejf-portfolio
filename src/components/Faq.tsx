@@ -6,11 +6,20 @@ export function Faq({ items }: { items: FaqType[] }) {
   const [open, setOpen] = useState<string | null>(items[0]?.id ?? null);
 
   return (
-    <section className="section-pad border-t border-white/5">
-      <div className="mx-auto max-w-[1360px] px-6 md:px-10">
+    <section className="relative section-pad border-t border-white/10 overflow-hidden bg-bone/[0.04]">
+      <span aria-hidden className="absolute top-0 left-0 right-0 h-[2px] prism-bar opacity-50" />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(60% 50% at 80% 0%, rgba(63,184,176,0.07) 0%, transparent 60%), radial-gradient(50% 40% at 10% 100%, rgba(217,122,74,0.06) 0%, transparent 60%)',
+        }}
+      />
+      <div className="relative mx-auto max-w-[1360px] px-6 md:px-10">
         <div className="flex items-center gap-3 mb-14">
           <span className="h-px w-10 bg-bone/30" />
-          <span className="eyebrow">Frequently asked</span>
+          <span className="eyebrow">Ask anything · Frequently asked</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">

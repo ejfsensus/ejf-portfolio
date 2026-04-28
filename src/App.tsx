@@ -29,7 +29,7 @@ export default function App() {
         <Products products={data.products} />
         <Approach steps={data.steps} capabilities={data.capabilities} />
         <Vision />
-        <Acuity offerings={data.acuity} />
+        <Acuity offerings={data.acuity} videos={data.recentVideos} />
         <Faq items={data.faqs} />
         <Contact />
       </main>
