@@ -40,6 +40,7 @@ export function ProductCard({ product, onOpen }: { product: Product; onOpen: () 
           hue={product.accent_hue}
           seed={product.slug}
           imageUrl={imageUrl}
+          videoUrl={product.video_url}
           alt={product.wordmark}
         />
       </div>

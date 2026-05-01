@@ -24,6 +24,7 @@ export type Product = {
   feasibility_user: string;
   accent_hue: string;
   artefact_url: string | null;
+  video_url: string | null;
   cta_label: string;
   cta_href: string;
   sort_order: number;
