@@ -78,24 +78,18 @@ export function ProductCard({ product, onOpen }: { product: Product; onOpen: () 
     </>
   );
 
-  if (isExternal) {
-    return (
-      <a
-        href={product.cta_href}
-        target="_blank"
-        rel="noreferrer"
-        className={className}
-        style={{ transform: 'translateZ(0)' }}
-      >
-        {body}
-      </a>
-    );
-  }
+  const activate = () => {
+    if (isExternal) {
+      window.open(product.cta_href, '_blank', 'noreferrer');
+    } else {
+      onOpen();
+    }
+  };
 
   const onKey = (e: ReactKeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      onOpen();
+      activate();
     }
   };
 
@@ -103,9 +97,13 @@ export function ProductCard({ product, onOpen }: { product: Product; onOpen: () 
     <div
       role="button"
       tabIndex={0}
-      onClick={onOpen}
+      onClick={activate}
       onKeyDown={onKey}
-      aria-label={`Open ${product.wordmark} brief`}
+      aria-label={
+        isExternal
+          ? `Open ${product.wordmark} (opens in new tab)`
+          : `Open ${product.wordmark} brief`
+      }
       className={`${className} cursor-pointer`}
       style={{ transform: 'translateZ(0)' }}
     >

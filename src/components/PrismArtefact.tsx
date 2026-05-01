@@ -42,7 +42,26 @@ export function PrismArtefact({
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [showVideo, setShowVideo] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
   const videoId = videoUrl ? extractYouTubeId(videoUrl) : null;
+  const embedSrc = videoId
+    ? (() => {
+        const origin =
+          typeof window !== 'undefined' ? encodeURIComponent(window.location.origin) : '';
+        const params = [
+          'autoplay=1',
+          'mute=1',
+          'controls=0',
+          'playsinline=1',
+          'rel=0',
+          'modestbranding=1',
+          origin ? `origin=${origin}` : '',
+        ]
+          .filter(Boolean)
+          .join('&');
+        return `https://www.youtube.com/embed/${videoId}?${params}`;
+      })()
+    : '';
 
   useEffect(() => {
     if (!videoId || !imageUrl) return;
@@ -86,16 +105,15 @@ export function PrismArtefact({
             showVideo ? 'opacity-0' : 'opacity-100'
           }`}
         />
-        {videoId && showVideo && (
+        {videoId && showVideo && !videoFailed && (
           <iframe
             key={videoId}
             title={alt ? `${alt} demo video` : 'Product demo video'}
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1`}
+            src={embedSrc}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
-            className="absolute inset-0 w-full h-full border-0 pointer-events-none"
-            loading="lazy"
+            onError={() => setVideoFailed(true)}
+            className="absolute inset-0 w-full h-full border-0"
           />
         )}
       </div>
