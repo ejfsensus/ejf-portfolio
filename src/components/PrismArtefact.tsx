@@ -68,6 +68,10 @@ export function PrismArtefact({
     if (typeof window === 'undefined') return;
     const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
+    const host = window.location.hostname;
+    const isSandboxedPreview =
+      host.includes('webcontainer') || host.includes('local-credentialless');
+    if (isSandboxedPreview) return;
 
     const el = containerRef.current;
     if (!el) return;
@@ -106,14 +110,10 @@ export function PrismArtefact({
           }`}
         />
         {videoId && showVideo && !videoFailed && (
-          <iframe
-            key={videoId}
-            title={alt ? `${alt} demo video` : 'Product demo video'}
+          <IframeWithFallback
             src={embedSrc}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            onError={() => setVideoFailed(true)}
-            className="absolute inset-0 w-full h-full border-0"
+            title={alt ? `${alt} demo video` : 'Product demo video'}
+            onFail={() => setVideoFailed(true)}
           />
         )}
       </div>
@@ -169,5 +169,34 @@ export function PrismArtefact({
         }}
       />
     </div>
+  );
+}
+
+function IframeWithFallback({
+  src,
+  title,
+  onFail,
+}: {
+  src: string;
+  title: string;
+  onFail: () => void;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      if (!loaded) onFail();
+    }, 4000);
+    return () => window.clearTimeout(t);
+  }, [loaded, onFail]);
+  return (
+    <iframe
+      title={title}
+      src={src}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+      onLoad={() => setLoaded(true)}
+      onError={onFail}
+      className="absolute inset-0 w-full h-full border-0"
+    />
   );
 }
