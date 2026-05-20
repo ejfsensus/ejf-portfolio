@@ -14,7 +14,7 @@ export function Hero({ onOpenFounder }: { onOpenFounder: () => void }) {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
       >
         <source src={heroVideo} type="video/mp4" />
       </video>
@@ -63,7 +63,7 @@ export function Hero({ onOpenFounder }: { onOpenFounder: () => void }) {
         <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-end">
           <p className="md:col-span-7 text-[17px] md:text-[20px] leading-[1.55] text-bone/85 max-w-[58ch]">
             Ethan James Farrell is an AI consultant, designer and builder. Through{' '}
-            <span className="text-bone">OpusAI</span> — the applied arm of Sensus InVista — he helps
+            <span className="text-bone">OpusAI</span>, the applied arm of Sensus InVista, he helps
             organisations design, build and deploy solutions they can actually trust.
           </p>
 

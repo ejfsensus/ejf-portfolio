@@ -29,6 +29,23 @@ export function Pillars({ pillars }: { pillars: Pillar[] }) {
         </div>
 
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-3xl overflow-hidden">
+          {pillars.length === 0 &&
+            Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                aria-hidden
+                className="relative p-8 md:p-10 lg:p-12 min-h-[420px] bg-obsidian flex flex-col animate-pulse"
+              >
+                <div className="h-7 w-7 rounded-full bg-bone/10" />
+                <div className="mt-auto space-y-4">
+                  <div className="h-3 w-24 bg-bone/10 rounded" />
+                  <div className="h-9 w-2/3 bg-bone/10 rounded" />
+                  <div className="h-4 w-3/4 bg-bone/5 rounded" />
+                  <div className="h-3 w-full bg-bone/5 rounded" />
+                  <div className="h-3 w-5/6 bg-bone/5 rounded" />
+                </div>
+              </div>
+            ))}
           {pillars.map((pillar) => {
             const Glyph = glyphFor(pillar.slug);
             const isLiberty = pillar.slug === 'liberty-rise';
@@ -67,7 +84,7 @@ export function Pillars({ pillars }: { pillars: Pillar[] }) {
                   }
                 />
                 <div className="mt-auto">
-                  <div className="text-[11px] tracking-[0.2em] uppercase text-bone/45 mb-3">
+                  <div className="text-[11px] tracking-[0.2em] uppercase text-bone/60 mb-3">
                     {pillar.label}
                   </div>
                   <h3 className="font-display font-semibold text-[30px] md:text-[36px] leading-[1.05] text-bone tracking-tightest">

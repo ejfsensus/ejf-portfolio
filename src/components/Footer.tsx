@@ -13,7 +13,7 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-6 font-serif italic text-[18px] text-bone/70 max-w-[36ch]">
-              AI consulting, design &amp; deployment. Operating as OpusAI — the applied arm of
+              AI consulting, design &amp; deployment. Operating as OpusAI, the applied arm of
               Sensus InVista.
             </p>
           </div>
@@ -23,7 +23,6 @@ export function Footer() {
             links={[
               { label: 'OpusAI', href: 'https://opusai.uk' },
               { label: 'Sensus Lab', href: 'https://sensuslab.uk' },
-              { label: 'Liberty Rise', href: '#' },
             ]}
           />
           <FooterCol
@@ -44,12 +43,12 @@ export function Footer() {
         </div>
 
         <div className="mt-20 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
-          <div className="text-[11px] tracking-[0.18em] uppercase text-bone/45 leading-[1.8]">
+          <div className="text-[11px] tracking-[0.18em] uppercase text-bone/60 leading-[1.8]">
             Sensus InVista Ltd · Registered Company No. 16491089<br />
             Bridge Grove, Southport, PR8 5AA · United Kingdom
           </div>
-          <div className="text-[11px] tracking-[0.18em] uppercase text-bone/45">
-            © {new Date().getFullYear()} Ethan James Farrell — All rights reserved
+          <div className="text-[11px] tracking-[0.18em] uppercase text-bone/60">
+            © {new Date().getFullYear()} Ethan James Farrell · All rights reserved
           </div>
         </div>
 

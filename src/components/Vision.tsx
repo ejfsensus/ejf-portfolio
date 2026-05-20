@@ -2,11 +2,14 @@ import { ArrowUpRight } from 'lucide-react';
 
 export function Vision() {
   return (
-    <section id="vision" className="relative section-pad bg-bone text-bone overflow-hidden">
+    <section id="vision" className="relative section-pad bg-obsidian text-bone overflow-hidden">
       <img
         src="/sensusbg.png"
         alt=""
         aria-hidden
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
         className="absolute inset-0 w-full h-full"
         style={{ objectFit: 'fill' }}
       />
@@ -30,7 +33,7 @@ export function Vision() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
           <h2 className="md:col-span-7 font-display font-semibold text-[40px] md:text-[80px] lg:text-[96px] leading-[0.98] tracking-tightest text-bone drop-shadow-[0_4px_20px_rgba(0,0,0,0.55)]">
             Sensus InVista<br />
-            <span className="font-serif italic font-light">&amp; InVista —</span><br />
+            <span className="font-serif italic font-light">&amp; InVista,</span><br />
             where this is<br />
             all heading.
           </h2>
@@ -42,13 +45,13 @@ export function Vision() {
               more inclusive society.
             </p>
             <p className="text-[17px] md:text-[18px] leading-[1.65] text-bone/85">
-              InVista is its flagship aspiration — a blockchain-backed, AI-driven knowledge
+              InVista is its flagship aspiration: a blockchain-backed, AI-driven knowledge
               network designed to democratise access to trusted information, explored in three
               dimensions and tailored to every user.
             </p>
             <p className="text-[14.5px] italic font-serif text-bone/70 leading-[1.5]">
               Both are deliberately framed as aspirational goals, not products on the shelf. They
-              define why the work exists and where it's going — not what's for sale today.
+              define why the work exists and where it's going, not what's for sale today.
             </p>
 
             <a

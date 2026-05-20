@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { X, ArrowUpRight, Wrench, PoundSterling, Compass, Users } from 'lucide-react';
 import type { Product } from '../lib/types';
 import { PrismArtefact } from './PrismArtefact';
+import { useFocusTrap } from '../lib/useFocusTrap';
 
 export function ProductModal({ product, onClose }: { product: Product | null; onClose: () => void }) {
+  const containerRef = useFocusTrap<HTMLDivElement>(!!product);
   useEffect(() => {
     if (!product) return;
     const onKey = (e: KeyboardEvent) => {
@@ -24,14 +26,15 @@ export function ProductModal({ product, onClose }: { product: Product | null; on
       className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-6"
       role="dialog"
       aria-modal="true"
-      aria-label={`${product.wordmark} — product brief`}
+      aria-label={`${product.wordmark} product brief`}
     >
       <button
         aria-label="Close"
         onClick={onClose}
+        tabIndex={-1}
         className="absolute inset-0 bg-obsidian/80 backdrop-blur-md"
       />
-      <div className="relative z-10 w-full max-w-[880px] max-h-[92vh] overflow-y-auto canvas-card border-white/10">
+      <div ref={containerRef} tabIndex={-1} className="relative z-10 w-full max-w-[880px] max-h-[92vh] overflow-y-auto canvas-card border-white/10">
         <div className="sticky top-0 z-10 flex items-center justify-between px-6 md:px-10 py-5 bg-ink/95 backdrop-blur border-b border-white/5">
           <div className="flex items-center gap-3 text-[11px] tracking-[0.18em] uppercase text-bone/55">
             <span>{product.category}</span>

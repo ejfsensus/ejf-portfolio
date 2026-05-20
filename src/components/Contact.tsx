@@ -21,6 +21,11 @@ export function Contact() {
       setError('Please fill in name, email, and a short message.');
       return;
     }
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(payload.email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
     setSending(true);
     setError(null);
     const { error } = await supabase.from('contact_submissions').insert(payload);
@@ -100,16 +105,31 @@ export function Contact() {
                   <Field name="organisation" label="Organisation (optional)" />
                   <Field name="message" label="About the opportunity" textarea required />
 
-                  {error && <p className="text-[13px] text-ember">{error}</p>}
+                  {error && (
+                    <p id="contact-error" role="alert" className="text-[13px] text-ember">
+                      {error}
+                    </p>
+                  )}
 
                   <button
                     type="submit"
                     disabled={sending}
-                    className="inline-flex items-center justify-between gap-4 bg-bone text-obsidian rounded-full px-6 py-3.5 text-[14px] font-medium hover:bg-ember transition-colors disabled:opacity-60"
+                    aria-busy={sending}
+                    className="inline-flex items-center justify-between gap-4 bg-bone text-obsidian rounded-full px-6 py-3.5 text-[14px] font-medium hover:bg-ember transition-colors disabled:opacity-60 min-h-[44px]"
                   >
-                    {sending ? 'Sending…' : 'Send inquiry'}
+                    <span className="inline-flex items-center gap-2">
+                      {sending && (
+                        <span aria-hidden className="inline-flex h-2 w-2 rounded-full bg-obsidian animate-pulse" />
+                      )}
+                      {sending ? 'Sending…' : 'Send inquiry'}
+                    </span>
                     <ArrowUpRight size={16} />
                   </button>
+
+                  <p className="text-[12px] text-bone/55 leading-[1.5]">
+                    Typical reply within two business days. A discovery call covers fit, scope and a
+                    realistic timeline. Engagements start from focused 2-week sprints.
+                  </p>
                 </form>
               )}
             </div>
@@ -134,18 +154,28 @@ function Field({
   required?: boolean;
 }) {
   const base =
-    'w-full bg-transparent border-b border-white/15 focus:border-ember/80 outline-none py-3 text-[15px] text-bone placeholder-bone/35 transition-colors';
+    'w-full bg-transparent border-b border-white/15 focus:border-ember/80 outline-none py-3 text-[15px] text-bone placeholder-bone/55 transition-colors';
+  const fieldId = `field-${name}`;
   return (
-    <label className="block">
-      <span className="block text-[11px] tracking-[0.2em] uppercase text-bone/50 mb-2">
+    <div className="block">
+      <label htmlFor={fieldId} className="block text-[11px] tracking-[0.2em] uppercase text-bone/65 mb-2">
         {label}
-        {required && <span className="ml-1 text-ember/80">*</span>}
-      </span>
+        {required && <span className="ml-1 text-ember/90" aria-hidden> *</span>}
+        {required && <span className="sr-only"> (required)</span>}
+      </label>
       {textarea ? (
-        <textarea name={name} rows={4} required={required} className={base} placeholder="A few sentences is plenty." />
+        <textarea
+          id={fieldId}
+          name={name}
+          rows={4}
+          required={required}
+          maxLength={2000}
+          className={base}
+          placeholder="A few sentences is plenty."
+        />
       ) : (
-        <input name={name} type={type} required={required} className={base} />
+        <input id={fieldId} name={name} type={type} required={required} className={base} />
       )}
-    </label>
+    </div>
   );
 }

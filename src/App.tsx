@@ -20,8 +20,9 @@ export default function App() {
 
   return (
     <div className="bg-obsidian text-bone min-h-screen">
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <Nav onOpenFounder={() => setFounderOpen(true)} />
-      <main>
+      <main id="main-content">
         <Hero onOpenFounder={() => setFounderOpen(true)} />
         <FounderStrip onOpen={() => setFounderOpen(true)} />
         <Positioning />

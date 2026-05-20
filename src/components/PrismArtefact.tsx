@@ -1,20 +1,121 @@
+import { useEffect, useRef, useState } from 'react';
+
 type Props = {
   hue: string;
   seed?: string;
   imageUrl?: string | null;
+  videoUrl?: string | null;
   alt?: string;
+  videoDelayMs?: number;
 };
+
+function extractYouTubeId(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes('youtu.be')) {
+      return parsed.pathname.replace('/', '') || null;
+    }
+    const v = parsed.searchParams.get('v');
+    if (v) return v;
+    const parts = parsed.pathname.split('/');
+    const i = parts.findIndex((p) => p === 'embed' || p === 'shorts');
+    if (i >= 0 && parts[i + 1]) return parts[i + 1];
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * Generative abstract prism artwork.
  * Swap-in ready: if `imageUrl` is provided, it renders that image instead.
- * The SVG light-field is deterministic per `seed`, so each product has its own signature.
+ * If `videoUrl` is provided, the image swaps to a muted autoplay YouTube embed
+ * 5 s after the card becomes visible. Honors prefers-reduced-motion.
  */
-export function PrismArtefact({ hue, seed = 'a', imageUrl, alt }: Props) {
+export function PrismArtefact({
+  hue,
+  seed = 'a',
+  imageUrl,
+  videoUrl,
+  alt,
+  videoDelayMs = 5000,
+}: Props) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const videoId = videoUrl ? extractYouTubeId(videoUrl) : null;
+  const embedSrc = videoId
+    ? (() => {
+        const origin =
+          typeof window !== 'undefined' ? encodeURIComponent(window.location.origin) : '';
+        const params = [
+          'autoplay=1',
+          'mute=1',
+          'controls=0',
+          'playsinline=1',
+          'rel=0',
+          'modestbranding=1',
+          origin ? `origin=${origin}` : '',
+        ]
+          .filter(Boolean)
+          .join('&');
+        return `https://www.youtube.com/embed/${videoId}?${params}`;
+      })()
+    : '';
+
+  useEffect(() => {
+    if (!videoId || !imageUrl) return;
+    if (typeof window === 'undefined') return;
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+    const host = window.location.hostname;
+    const isSandboxedPreview =
+      host.includes('webcontainer') || host.includes('local-credentialless');
+    if (isSandboxedPreview) return;
+
+    const el = containerRef.current;
+    if (!el) return;
+
+    let timeoutId: number | undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && timeoutId === undefined) {
+            timeoutId = window.setTimeout(() => setShowVideo(true), videoDelayMs);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
+  }, [videoId, imageUrl, videoDelayMs]);
+
   if (imageUrl) {
     return (
-      <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-obsidian">
-        <img src={imageUrl} alt={alt ?? ''} className="w-full h-full object-cover" />
+      <div
+        ref={containerRef}
+        className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-obsidian"
+      >
+        <img
+          src={imageUrl}
+          alt={alt ?? ''}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            showVideo ? 'opacity-0' : 'opacity-100'
+          }`}
+        />
+        {videoId && showVideo && !videoFailed && (
+          <IframeWithFallback
+            src={embedSrc}
+            title={alt ? `${alt} demo video` : 'Product demo video'}
+            onFail={() => setVideoFailed(true)}
+          />
+        )}
       </div>
     );
   }
@@ -68,5 +169,34 @@ export function PrismArtefact({ hue, seed = 'a', imageUrl, alt }: Props) {
         }}
       />
     </div>
+  );
+}
+
+function IframeWithFallback({
+  src,
+  title,
+  onFail,
+}: {
+  src: string;
+  title: string;
+  onFail: () => void;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      if (!loaded) onFail();
+    }, 4000);
+    return () => window.clearTimeout(t);
+  }, [loaded, onFail]);
+  return (
+    <iframe
+      title={title}
+      src={src}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+      onLoad={() => setLoaded(true)}
+      onError={onFail}
+      className="absolute inset-0 w-full h-full border-0"
+    />
   );
 }

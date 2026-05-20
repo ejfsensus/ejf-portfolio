@@ -27,13 +27,33 @@ export function Products({ products }: { products: Product[] }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} onOpen={() => setActive(p)} />
-          ))}
+          {products.length === 0
+            ? Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
+            : products.map((p) => (
+                <ProductCard key={p.id} product={p} onOpen={() => setActive(p)} />
+              ))}
         </div>
       </div>
 
       <ProductModal product={active} onClose={() => setActive(null)} />
     </section>
+  );
+}
+
+function ProductSkeleton() {
+  return (
+    <div className="canvas-card p-6 md:p-8 flex flex-col gap-6 animate-pulse" aria-hidden>
+      <div className="aspect-[4/3] rounded-2xl bg-bone/5" />
+      <div className="h-3 w-32 bg-bone/10 rounded" />
+      <div className="space-y-3">
+        <div className="h-7 w-3/4 bg-bone/10 rounded" />
+        <div className="h-4 w-2/3 bg-bone/5 rounded" />
+      </div>
+      <div className="space-y-2 mt-auto">
+        <div className="h-3 w-full bg-bone/5 rounded" />
+        <div className="h-3 w-5/6 bg-bone/5 rounded" />
+        <div className="h-3 w-4/6 bg-bone/5 rounded" />
+      </div>
+    </div>
   );
 }
