@@ -12,6 +12,7 @@ import { Faq } from './components/Faq';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FounderModal } from './components/FounderModal';
+import { CursorGlass } from './components/CursorGlass';
 import { usePortfolioData } from './lib/usePortfolioData';
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
         onClose={() => setFounderOpen(false)}
         experience={data.experience}
       />
+      <CursorGlass />
     </div>
   );
 }
