@@ -2,6 +2,21 @@ import { FormEvent, useState } from 'react';
 import { ArrowUpRight, Mail, MapPin, Linkedin, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
+const WEBHOOK_URL = (import.meta.env.VITE_WEBHOOK_URL as string | undefined) ?? '';
+
+async function notifyWebhook(payload: Record<string, string>) {
+  if (!WEBHOOK_URL) return;
+  try {
+    await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    // webhook failure is non-fatal — Supabase success is the source of truth
+  }
+}
+
 export function Contact() {
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
@@ -28,9 +43,15 @@ export function Contact() {
     }
     setSending(true);
     setError(null);
-    const { error } = await supabase.from('contact_submissions').insert(payload);
+
+    // Run Supabase insert and webhook POST concurrently
+    const [sbResult] = await Promise.all([
+      supabase.from('contact_submissions').insert(payload),
+      notifyWebhook(payload),
+    ]);
+
     setSending(false);
-    if (error) {
+    if (sbResult.error) {
       setError('Something went wrong. Please email ethan@sensusinvista.ltd directly.');
       return;
     }

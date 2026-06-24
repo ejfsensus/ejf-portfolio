@@ -22,7 +22,7 @@ export function Footer() {
             title="Ecosystem"
             links={[
               { label: 'OpusAI', href: 'https://opusai.uk' },
-              { label: 'Sensus Lab', href: 'https://sensuslab.uk' },
+              { label: 'Sensus Lab', href: 'https://labs.sensusinvista.ltd' },
             ]}
           />
           <FooterCol
@@ -37,7 +37,9 @@ export function Footer() {
             links={[
               { label: 'Acuity Institute', href: 'https://acuity.institute' },
               { label: 'Ethan James Farrell', href: 'https://ethan-james.co.uk' },
+              { label: 'GitHub', href: 'https://github.com/ethanjamesfarrell' },
               { label: 'LinkedIn', href: 'https://linkedin.com/in/ethanjamesfarrell' },
+              { label: 'Upwork', href: 'https://www.upwork.com/freelancers/~01732a3c3a5882a89e' },
             ]}
           />
         </div>
