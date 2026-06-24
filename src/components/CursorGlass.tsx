@@ -1,22 +1,21 @@
 import { useEffect, useRef } from 'react';
 import { Glass } from '@samasante/liquid-glass';
 
-// Apple-ish preset tuned for the current 93x50 loupe. `frost: 1` keeps the
-// backdrop blur a whisper; strong refraction + sheen + bend do the visual work.
+// Extracted liquid-glass settings for the 93x50 loupe.
 const APPLE_OPTICS = {
   // REFRACTION
-  strength: 0.14,
+  strength: 0.2,
   depth: 0.95,
-  curvature: 0.5,
+  curvature: 0.35,
   dispersion: 0.2,
   // EDGE
   bend: 0.4,
-  bendWidth: 0.07,
+  bendWidth: 0.06,
   // SHEEN
   sheen: 1.2,
   sheenWidth: 3.5,
   specular: 1.6,
-  sheenAngle: 0,
+  sheenAngle: 20,
   sheenFalloff: 1.5,
   // BACKGROUND
   glow: 0.1,
