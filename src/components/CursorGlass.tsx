@@ -1,28 +1,30 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { Glass, glassValue } from '@samasante/liquid-glass';
 
-// Apple-ish preset (Option B). `frost` here drives the CSS `backdrop-filter`
-// blur (the library only applies that layer when the lens is content-less),
-// so 8–12 reads as a real frosted disc instead of a faint haze. The
-// in-filter pieces (sheen, glow, dispersion, edge highlight) all run from
-// the same optics object.
+// Apple-ish preset tuned for the current 93x50 loupe. Low frost (1) keeps the
+// backdrop blur a whisper so the live page reads through, while strong
+// refraction + sheen + bend do the heavy visual lifting.
 const APPLE_OPTICS = {
-  strength: 0.08,
-  depth: 0.75,
-  curvature: 0.7,
-  dispersion: 0.6,
-  frost: 10,
-  brightness: 0.12,
-  specular: 1,
-  sheen: 0.4,
-  sheenAngle: 45,
-  sheenWidth: 3,
+  // REFRACTION
+  strength: 0.14,
+  depth: 0.95,
+  curvature: 0.5,
+  dispersion: 0.2,
+  // EDGE
+  bend: 0.4,
+  bendWidth: 0.07,
+  // SHEEN
+  sheen: 1.2,
+  sheenWidth: 3.5,
+  specular: 1.6,
+  sheenAngle: 0,
   sheenFalloff: 1.5,
-  glow: 0.18,
+  // BACKGROUND
+  glow: 0.1,
   glowSpread: 1,
   glowFalloff: 0.5,
-  bend: 0,
-  bendWidth: 0.16,
+  frost: 1,
+  brightness: 0,
   splay: 0,
   clipToShape: true,
   softEdge: true,
@@ -115,7 +117,7 @@ export function CursorGlass() {
         optics={APPLE_OPTICS}
         unstable_lens={{
           tintColor: 'white',
-          tintOpacity: 0.08,
+          tintOpacity: 0.04,
           tintBlur: 0,
           restShadowOpacity: 1,
           edgeBias: 0.5,
