@@ -1,47 +1,74 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { Glass, glassValue } from '@samasante/liquid-glass';
 
-// Extracted liquid-glass settings for the 93x50 loupe.
-const APPLE_OPTICS = {
-  // REFRACTION
-  strength: 0.2,
-  depth: 0.95,
-  curvature: 0.35,
-  dispersion: 0.2,
-  // EDGE
-  bend: 0.4,
-  bendWidth: 0.06,
-  // SHEEN
-  sheen: 1.2,
-  sheenWidth: 3.5,
-  specular: 1.6,
-  sheenAngle: 20,
-  sheenFalloff: 1.5,
-  // BACKGROUND
-  glow: 0.1,
-  glowSpread: 1,
-  glowFalloff: 0.5,
-  frost: 1,
-  brightness: 0,
-  splay: 0,
+/**
+ * CursorGlass — a fresh, demo-faithful reimplementation of the loupe from
+ * glass.samasante.com.
+ *
+ * The demo's Playground loupe (see samasante/liquid-glass/site/src/
+ * components/GlassDemo.tsx) uses:
+ *
+ *   <Glass
+ *     refract={<Scene dark grid scale />}
+ *     pixelUnits
+ *     behind={pageBg}
+ *     optics={DEFAULT_LENS}
+ *     center={{ x: glassValue, y: glassValue }}
+ *     width={glassValue} height={glassValue} radius={glassValue}
+ *     style={{ position: "absolute", inset: 0 }}
+ *   />
+ *
+ * …inside a bounded stage. Here we use the same exact wiring, but the
+ * "stage" is the full viewport so the loupe can roam the whole page.
+ *
+ * Lens geometry: a true 240 x 240 circle (radius 120) — round, thick,
+ * substantial, matching the demo's substantial feel.
+ *
+ * Scene: a full-viewport page mirror (dark obsidian base, the hero's
+ * purple/orange/teal radial blooms, a 23px white-6% dot grid, and the
+ * hero's ghost type) so the refracted copy reads as a real page rather
+ * than a flat gradient.
+ */
+
+// ── Lens geometry ──────────────────────────────────────────────────────────
+const LENS_SIZE = 240; // full px — round, thick
+const LENS_RADIUS = LENS_SIZE / 2;
+
+// ── Optics: verbatim from the demo's DEFAULT_LENS (Playground.tsx) ─────────
+const DEMO_OPTICS = {
+  // shape
+  mapSize: 512,
   clipToShape: true,
   softEdge: true,
-  mapSize: 512,
-};
+  splay: 0,
+  sheenAngle: 0,
+  sheenDark: false,
+  // edge / meniscus
+  bend: 0.4,
+  bendWidth: 0.07,
+  // refraction
+  depth: 0.95,
+  curvature: 0.5,
+  dispersion: 0.2,
+  strength: 0.14,
+  // background
+  frost: 1,
+  brightness: 0,
+  // specular
+  specular: 1.55,
+  sheen: 1.2,
+  sheenWidth: 3.5,
+  sheenFalloff: 1.7,
+  // glow
+  glow: 0.1,
+  glowSpread: 1,
+  glowFalloff: 0.6,
+} as const;
 
 /**
- * The <Scene> the lens refracts. The demo's loupe copies the stage (dot
- * grid + headline + photos) and refracts that copy through the SVG filter —
- * that's what makes the loupe read as "looking at the page". For the
- * portfolio we mirror the page's actual visual language: dark obsidian base,
- * the same purple/orange/teal radial blooms used across the hero + section
- * cards, a subtle dot grid (matching the demo's anchor pattern), and a few
- * ghost lines of type that read as a refracted page when the lens passes
- * over them.
- *
- * Kept deliberately restrained — the lens is 93x50, so the refracted copy
- * only needs to register as "page-like" at small scale, not be a full
- * pixel-perfect duplicate of the page.
+ * The <Scene> the lens refracts. Modelled on the demo's Scene: a
+ * page-like surface (bg color + dot grid + content) so the refracted
+ * copy reads as a real page, not a flat gradient.
  */
 function PageScene() {
   return (
@@ -50,6 +77,7 @@ function PageScene() {
       style={{
         position: 'absolute',
         inset: 0,
+        overflow: 'hidden',
         backgroundColor: '#0A0A0C',
         backgroundImage: [
           // Dot grid (matches the demo's anchor pattern)
@@ -62,19 +90,17 @@ function PageScene() {
           'radial-gradient(60% 60% at 50% 50%, rgba(63, 184, 176, 0.10) 0%, transparent 70%)',
         ].join(', '),
         backgroundSize: '23px 23px, 100% 100%, 100% 100%, 100% 100%',
-        backgroundPosition: '0 0, 0 0, 0 0, 0 0',
-        overflow: 'hidden',
       }}
     >
-      {/* Ghost type — a couple of dim headlines so the refracted copy reads
-          as a page-with-content rather than a flat gradient. Low contrast
+      {/* Ghost type — a few dim headlines so the refracted copy reads
+          as a page-with-content rather than a flat field. Low contrast
           on purpose (the lens's bend + sheen are the visual focus). */}
       <div
         style={{
           position: 'absolute',
           left: '6%',
-          top: '38%',
-          color: 'rgba(245, 245, 240, 0.18)',
+          top: '32%',
+          color: 'rgba(245, 245, 240, 0.22)',
           fontFamily: 'ui-serif, Georgia, serif',
           fontStyle: 'italic',
           fontWeight: 300,
@@ -91,8 +117,8 @@ function PageScene() {
         style={{
           position: 'absolute',
           left: '6%',
-          top: '52%',
-          color: 'rgba(245, 245, 240, 0.14)',
+          top: '44%',
+          color: 'rgba(245, 245, 240, 0.18)',
           fontFamily: 'ui-serif, Georgia, serif',
           fontStyle: 'italic',
           fontWeight: 300,
@@ -109,8 +135,8 @@ function PageScene() {
         style={{
           position: 'absolute',
           right: '8%',
-          top: '20%',
-          color: 'rgba(217, 122, 74, 0.22)',
+          top: '18%',
+          color: 'rgba(217, 122, 74, 0.28)',
           fontFamily: 'ui-sans-serif, system-ui, sans-serif',
           fontWeight: 500,
           fontSize: '11px',
@@ -126,8 +152,8 @@ function PageScene() {
         style={{
           position: 'absolute',
           left: '6%',
-          bottom: '14%',
-          color: 'rgba(245, 245, 240, 0.10)',
+          bottom: '12%',
+          color: 'rgba(245, 245, 240, 0.12)',
           fontFamily: 'ui-sans-serif, system-ui, sans-serif',
           fontWeight: 400,
           fontSize: '14px',
@@ -144,24 +170,16 @@ function PageScene() {
 }
 
 /**
- * A floating liquid-glass loupe that follows the cursor across the whole
- * page, modelled exactly on the playground at glass.samasante.com:
- *
- *   - <Glass refract={<PageScene />} pixelUnits behind="#0A0A0C" />
- *   - center={{x, y}} with motion values (snaps on first move, eases 0.3)
- *   - width / height / radius as static px (the user's spec)
- *
- * The lens is OPAQUE — it shows a refracted copy of the Scene, just like
- * the demo's loupe shows a refracted copy of its stage. To "see the page
- * through the glass", the Scene has to BE a page-like surface; the
- * library's `refract` path can't sample the live DOM.
+ * The loupe. Cursor following is wired exactly like the demo: the
+ * `center` prop takes 0..1 motion values that an rAF loop eases towards
+ * the cursor. Touch-only devices are skipped (a sticky loupe breaks
+ * scroll/tap).
  */
 export function CursorGlass() {
   const x = useMemo(() => glassValue(0.5), []);
   const y = useMemo(() => glassValue(0.5), []);
   const targetRef = useRef({ x: 0.5, y: 0.5 });
   const visibleRef = useRef(false);
-  // Skip on touch-only devices — a sticky loupe breaks scroll/tap.
   const enabledRef = useRef(true);
 
   useEffect(() => {
@@ -170,7 +188,7 @@ export function CursorGlass() {
     }
   }, []);
 
-  // rAF loop: ease the centre towards the cursor target every frame.
+  // rAF loop: ease centre towards cursor target.
   useEffect(() => {
     if (!enabledRef.current) return;
     let raf = 0;
@@ -228,11 +246,11 @@ export function CursorGlass() {
         refract={<PageScene />}
         pixelUnits
         behind="#0A0A0C"
-        optics={APPLE_OPTICS}
+        optics={DEMO_OPTICS}
         center={{ x, y }}
-        width={93}
-        height={50}
-        radius={74}
+        width={LENS_SIZE}
+        height={LENS_SIZE}
+        radius={LENS_RADIUS}
         style={{ position: 'absolute', inset: 0 }}
       />
     </div>
