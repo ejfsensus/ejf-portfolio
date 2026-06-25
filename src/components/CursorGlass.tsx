@@ -29,13 +29,20 @@ const APPLE_OPTICS = {
   mapSize: 512,
 };
 
-// A "page scene" the lens refracts. The demo's loupe copies the page (dot
-// grid + content) and refracts that copy through the SVG filter — that's
-// what makes the page-bend look work cross-browser (the `refract` prop
-// routes the SVG filter at a copy, so it's not Blink-only like
-// `backdrop-filter: url()`). For the portfolio we mirror the hero's
-// gradients + dark base — the loupe then refracts a page-like surface
-// as it follows the cursor.
+/**
+ * The <Scene> the lens refracts. The demo's loupe copies the stage (dot
+ * grid + headline + photos) and refracts that copy through the SVG filter —
+ * that's what makes the loupe read as "looking at the page". For the
+ * portfolio we mirror the page's actual visual language: dark obsidian base,
+ * the same purple/orange/teal radial blooms used across the hero + section
+ * cards, a subtle dot grid (matching the demo's anchor pattern), and a few
+ * ghost lines of type that read as a refracted page when the lens passes
+ * over them.
+ *
+ * Kept deliberately restrained — the lens is 93x50, so the refracted copy
+ * only needs to register as "page-like" at small scale, not be a full
+ * pixel-perfect duplicate of the page.
+ */
 function PageScene() {
   return (
     <div
@@ -43,8 +50,10 @@ function PageScene() {
       style={{
         position: 'absolute',
         inset: 0,
-        background: '#0A0A0C',
+        backgroundColor: '#0A0A0C',
         backgroundImage: [
+          // Dot grid (matches the demo's anchor pattern)
+          'radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)',
           // Hero purple bloom (top-right)
           'radial-gradient(50% 50% at 80% 20%, rgba(43, 42, 99, 0.55) 0%, transparent 60%)',
           // Hero orange bloom (bottom-left)
@@ -52,21 +61,100 @@ function PageScene() {
           // Subtle teal sheen (centre, very faint)
           'radial-gradient(60% 60% at 50% 50%, rgba(63, 184, 176, 0.10) 0%, transparent 70%)',
         ].join(', '),
+        backgroundSize: '23px 23px, 100% 100%, 100% 100%, 100% 100%',
+        backgroundPosition: '0 0, 0 0, 0 0, 0 0',
+        overflow: 'hidden',
       }}
-    />
+    >
+      {/* Ghost type — a couple of dim headlines so the refracted copy reads
+          as a page-with-content rather than a flat gradient. Low contrast
+          on purpose (the lens's bend + sheen are the visual focus). */}
+      <div
+        style={{
+          position: 'absolute',
+          left: '6%',
+          top: '38%',
+          color: 'rgba(245, 245, 240, 0.18)',
+          fontFamily: 'ui-serif, Georgia, serif',
+          fontStyle: 'italic',
+          fontWeight: 300,
+          fontSize: 'clamp(40px, 7vw, 88px)',
+          lineHeight: 0.95,
+          letterSpacing: '-0.02em',
+          whiteSpace: 'nowrap',
+          userSelect: 'none',
+        }}
+      >
+        Unique perspectives,
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          left: '6%',
+          top: '52%',
+          color: 'rgba(245, 245, 240, 0.14)',
+          fontFamily: 'ui-serif, Georgia, serif',
+          fontStyle: 'italic',
+          fontWeight: 300,
+          fontSize: 'clamp(40px, 7vw, 88px)',
+          lineHeight: 0.95,
+          letterSpacing: '-0.02em',
+          whiteSpace: 'nowrap',
+          userSelect: 'none',
+        }}
+      >
+        built with intent.
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          right: '8%',
+          top: '20%',
+          color: 'rgba(217, 122, 74, 0.22)',
+          fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+          fontWeight: 500,
+          fontSize: '11px',
+          letterSpacing: '0.24em',
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          userSelect: 'none',
+        }}
+      >
+        Accepting clients
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          left: '6%',
+          bottom: '14%',
+          color: 'rgba(245, 245, 240, 0.10)',
+          fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+          fontWeight: 400,
+          fontSize: '14px',
+          lineHeight: 1.55,
+          maxWidth: '38ch',
+          userSelect: 'none',
+        }}
+      >
+        AI consulting, design &amp; deployment. Operating as OpusAI, the
+        applied arm of Sensus InVista.
+      </div>
+    </div>
   );
 }
 
 /**
  * A floating liquid-glass loupe that follows the cursor across the whole
- * page, modelled on the playground at glass.samasante.com.
+ * page, modelled exactly on the playground at glass.samasante.com:
  *
- * The lens is 93 x 50 (r=74). It refracts a copy of <PageScene> via the
- * library's `refract` + `pixelUnits` path (the same mode the demo uses) so
- * the SVG displacement filter is applied cross-browser, not Blink-only.
- * The wrapper is a 100vw x 100vh fixed layer with `position: absolute;
- * inset: 0` on the <Glass>, and the lens centre (a 0..1 motion value)
- * positions the loupe within that field.
+ *   - <Glass refract={<PageScene />} pixelUnits behind="#0A0A0C" />
+ *   - center={{x, y}} with motion values (snaps on first move, eases 0.3)
+ *   - width / height / radius as static px (the user's spec)
+ *
+ * The lens is OPAQUE — it shows a refracted copy of the Scene, just like
+ * the demo's loupe shows a refracted copy of its stage. To "see the page
+ * through the glass", the Scene has to BE a page-like surface; the
+ * library's `refract` path can't sample the live DOM.
  */
 export function CursorGlass() {
   const x = useMemo(() => glassValue(0.5), []);
